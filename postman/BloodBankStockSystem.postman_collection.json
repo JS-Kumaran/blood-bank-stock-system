@@ -1,0 +1,316 @@
+{
+  "info": {
+    "name": "Blood Bank Stock System",
+    "description": "Complete API collection for Blood Bank Stock System",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Donations",
+      "item": [
+        {
+          "name": "Record Donation - A+ 5 units",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"bloodGroup\": \"A+\",\n  \"units\": 5\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/donations",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "donations"]
+            }
+          }
+        },
+        {
+          "name": "Record Donation - B+ 3 units",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"bloodGroup\": \"B+\",\n  \"units\": 3\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/donations",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "donations"]
+            }
+          }
+        },
+        {
+          "name": "Record Donation - Invalid (0 units)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"bloodGroup\": \"A+\",\n  \"units\": 0\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/donations",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "donations"]
+            }
+          }
+        },
+        {
+          "name": "Record Donation - Invalid Blood Group",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"bloodGroup\": \"X+\",\n  \"units\": 5\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/donations",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "donations"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Requests",
+      "item": [
+        {
+          "name": "Create Request - A+ 3 units",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"requesterName\": \"John Doe\",\n  \"bloodGroup\": \"A+\",\n  \"requestedUnits\": 3\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/requests",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "requests"]
+            }
+          }
+        },
+        {
+          "name": "Create Request - A+ 10 units",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"requesterName\": \"Jane Smith\",\n  \"bloodGroup\": \"A+\",\n  \"requestedUnits\": 10\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/requests",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "requests"]
+            }
+          }
+        },
+        {
+          "name": "Create Request - Invalid (0 units)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"requesterName\": \"John Doe\",\n  \"bloodGroup\": \"A+\",\n  \"requestedUnits\": 0\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/requests",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "requests"]
+            }
+          }
+        },
+        {
+          "name": "Create Request - Blank Requester Name",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"requesterName\": \"\",\n  \"bloodGroup\": \"A+\",\n  \"requestedUnits\": 5\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/requests",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "requests"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Fulfill Requests",
+      "item": [
+        {
+          "name": "Fulfill Request - Success (Request ID 1)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/requests/1/fulfill",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "requests", "1", "fulfill"]
+            }
+          }
+        },
+        {
+          "name": "Fulfill Request - Insufficient Stock (Request ID 2)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/requests/2/fulfill",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "requests", "2", "fulfill"]
+            }
+          }
+        },
+        {
+          "name": "Fulfill Request - Non-existing Request",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/requests/999/fulfill",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "requests", "999", "fulfill"]
+            }
+          }
+        },
+        {
+          "name": "Fulfill Request - Already Fulfilled",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/requests/1/fulfill",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "requests", "1", "fulfill"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Stock Summary",
+      "item": [
+        {
+          "name": "Get Stock Summary",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/stock",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "stock"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Get Requests (Optional)",
+      "item": [
+        {
+          "name": "Get All Requests",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/requests",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "requests"]
+            }
+          }
+        },
+        {
+          "name": "Get Request by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/requests/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "requests", "1"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
