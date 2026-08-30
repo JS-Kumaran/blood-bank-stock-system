@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Blood Bank Stock System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 { color: #c0392b; }
+        .status { color: #27ae60; font-weight: bold; }
+        .endpoints {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        a { color: #2980b9; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🩸 Blood Bank Stock System</h1>
+        <p class="status">✅ System is running</p>
+        
+        <div class="endpoints">
+            <h3>📌 API Endpoints:</h3>
+            <ul>
+                <li><strong>Blood Stock:</strong> <a href="/api/blood-stock">/api/blood-stock</a></li>
+                <li><strong>Blood Requests:</strong> <a href="/api/blood-requests">/api/blood-requests</a></li>
+                <li><strong>API Documentation:</strong> <a href="/swagger-ui/index.html">Swagger UI</a></li>
+                <li><strong>Health Check:</strong> <a href="/health">/health</a></li>
+            </ul>
+        </div>
+        
+        <p style="color: #7f8c8d; font-size: 14px;">
+            Version: 1.0.0 | Built with Spring Boot
+        </p>
+    </div>
+</body>
+</html>

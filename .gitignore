@@ -1,32 +1,14 @@
-# Compiled class files
+# Compiled files
+target/
 *.class
 
-# Package files
-*.jar
-*.war
-*.ear
-
-# Maven
-target/
-pom.xml.tag
-pom.xml.releaseBackup
-pom.xml.versionsBackup
-pom.xml.next
-release.properties
-dependency-reduced-pom.xml
-buildNumber.properties
-.mvn/timing.properties
-.mvn/wrapper/maven-wrapper.jar
-
-# IDE
+# IDE files
 .idea/
 *.iml
-*.ipr
-*.iws
-.classpath
-.project
-.settings/
 .vscode/
+.settings/
+.project
+.classpath
 *.swp
 *.swo
 
@@ -34,20 +16,36 @@ buildNumber.properties
 logs/
 *.log
 
-# Application properties with sensitive data
-application.properties
-application-*.properties
+# Environment files
+.env
+.env.example
+application-local.properties
+application-dev.properties
 
 # OS files
 .DS_Store
 Thumbs.db
 
-# Test data
-test-output/
+# Maven
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
 
-# Database
+# Build files
+*.jar
+*.war
+*.ear
+
+# Test files
+*.test
+*.rej
+
+# Database files
 *.db
-*.sqlite
 *.h2.db
-*.lock
+*.mv.db
 *.trace.db
+
+# Docker files
+docker-compose.override.yml
