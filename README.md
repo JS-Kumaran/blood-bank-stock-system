@@ -1,43 +1,182 @@
-# Blood Bank Stock System
+# 🩸 Blood Bank Stock System - Backend API
 
-## Project Overview
+A containerized REST API built with Spring Boot and MySQL for managing blood bank inventory, donors, patients, and blood requests.
 
-The Blood Bank Stock System is a Spring Boot backend application designed to manage blood bank inventory. It tracks blood stock by blood group, records donations, processes blood requests, and maintains a transaction history of all stock movements.
+---
 
-## Objective
+## 📋 Overview
 
-This application provides a robust API for blood banks to:
+This is the **backend REST API** for a Blood Bank Management System. It provides CRUD operations for:
+- Blood stock inventory
+- Donor records
+- Patient records  
+- Blood requests from hospitals
+- Transaction logging (IN/OUT)
 
-- Track current blood stock levels for all blood groups
-- Record blood donations (IN transactions)
-- Create and process blood requests (OUT transactions)
-- Ensure stock never becomes negative
-- Maintain a complete audit trail of all stock movements
+**Frontend not included** - This is a backend-only service meant to be consumed by a separate frontend application.
 
-## Features
+---
 
-- **Donation Management**: Record blood donations with automatic stock updates
-- **Request Processing**: Create and fulfill blood requests
-- **Stock Management**: Real-time inventory tracking with pessimistic locking
-- **Transaction History**: Complete audit trail of all IN/OUT transactions
-- **Validation**: Comprehensive input validation and business rule enforcement
-- **Exception Handling**: Centralized error handling with consistent responses
+## 🛠️ Tech Stack
 
-## Tech Stack
+| Technology | Version |
+|------------|---------|
+| Java | 21 LTS |
+| Spring Boot | 3.x |
+| MySQL | 8.0 |
+| Docker | 24.x |
+| Maven | 3.9+ |
 
-- **Java 21**
-- **Spring Boot 3.2.3**
-- **Maven** for build automation
-- **Spring Data JPA** for data persistence
-- **MySQL** as the relational database
-- **Jakarta Bean Validation** for input validation
-- **REST APIs** for all operations
-- **Postman** for API testing
-- **Git/GitHub** for version control
+---
 
-## Architecture
+## 🚀 Quick Start
 
-- **Controllers**: Handle HTTP requests and responses
-- **Services**: Contain business logic and transaction management
-- **Repositories**: Data access layer using Spring Data JPA
-- **Entities**: JPA entities mapping to database tables
+```bash
+# Clone the repository
+git clone https://github.com/JS-Kumaran/blood-bank-stock-system.git
+cd blood-bank-stock-system
+
+# Build and start with Docker
+docker compose up --build
+
+# API runs at: http://localhost:8080
+# MySQL runs at: localhost:3307
+```
+
+---
+
+## 🐳 Docker Setup
+
+The project includes two services:
+
+| Service | Container | Port |
+|---------|-----------|------|
+| Spring Boot API | bloodbank-app | 8080 |
+| MySQL Database | bloodbank-mysql | 3307 |
+
+```bash
+# Start services
+docker compose up -d
+
+# View logs
+docker compose logs -f
+
+# Stop services
+docker compose down
+
+# Reset everything (remove volumes)
+docker compose down -v
+```
+
+---
+
+## ⚙️ Configuration
+
+Create a `.env` file:
+
+```env
+DB_PASSWORD=your_password
+DB_URL=jdbc:mysql://mysql:3306/bloodbank?useSSL=false&allowPublicKeyRetrieval=true
+DB_USERNAME=root
+SPRING_PROFILES_ACTIVE=docker
+```
+
+---
+
+## 📊 API Endpoints
+
+Base URL: `http://localhost:8080/api`
+
+| Resource | Endpoints |
+|----------|-----------|
+| **Blood Stock** | `GET/POST /stocks`, `GET/PUT/DELETE /stocks/{id}` |
+| **Donors** | `GET/POST /donors`, `GET/PUT/DELETE /donors/{id}` |
+| **Patients** | `GET/POST /patients`, `GET/PUT/DELETE /patients/{id}` |
+| **Requests** | `GET/POST /requests`, `PUT /requests/{id}/status` |
+| **Transactions** | `GET/POST /transactions`, `GET /transactions/date` |
+
+### Example Request
+
+```bash
+# Get all blood stocks
+curl http://localhost:8080/api/stocks
+
+# Add new blood stock
+curl -X POST http://localhost:8080/api/stocks \
+  -H "Content-Type: application/json" \
+  -d '{"bloodType":"A_POSITIVE","quantity":10,"expiryDate":"2024-12-31"}'
+```
+
+---
+
+## 💻 Development
+
+```bash
+# Build without Docker
+mvn clean package
+
+# Run locally
+mvn spring-boot:run
+
+# Run tests
+mvn test
+```
+
+---
+
+## 🔧 Troubleshooting
+
+| Issue | Solution |
+|-------|----------|
+| Port 8080 in use | `netstat -ano \| findstr :8080` then kill the process |
+| MySQL connection | Check MySQL is healthy: `docker compose exec mysql mysqladmin ping` |
+| Build fails | Clear cache: `docker system prune -a` |
+
+---
+
+## 📁 Project Structure
+
+```
+blood-bank-stock-system/
+├── src/
+│   ├── main/java/com/bloodbank/
+│   │   ├── controller/   # REST endpoints
+│   │   ├── service/      # Business logic
+│   │   ├── repository/   # Database access
+│   │   └── model/        # Entities
+│   └── resources/
+├── Dockerfile
+├── docker-compose.yml
+├── pom.xml
+└── README.md
+```
+
+---
+
+## 🤝 Contributing
+
+1. Fork the repo
+2. Create a branch: `git checkout -b feature/your-feature`
+3. Commit changes: `git commit -m 'Add feature'`
+4. Push: `git push origin feature/your-feature`
+5. Open a Pull Request
+
+---
+
+## 📄 License
+
+MIT License - feel free to use this project for any purpose.
+
+---
+
+## 🙏 Acknowledgments
+
+- Spring Boot for the REST API framework
+- Docker for containerization
+- MySQL for database
+
+---
+
+**Made by JS-Kumaran**
+
+---
