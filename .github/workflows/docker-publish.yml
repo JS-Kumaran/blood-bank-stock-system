@@ -20,18 +20,16 @@ env:
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
-    
     permissions:
       contents: read
       packages: write
-      id-token: write
 
     steps:
-      # Step 1: Checkout code
+      # Checkout code
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Step 2: Set up JDK 21
+      # Set up JDK
       - name: Set up JDK 21
         uses: actions/setup-java@v4
         with:
@@ -39,13 +37,22 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      # Step 3: Build with Maven
+      # Build JAR
       - name: Build with Maven
         run: |
           mvn clean package -DskipTests
-          echo "JAR file created successfully"
+          echo "JAR built successfully"
 
-      # Step 4: Log in to GitHub Container Registry
+      # Set up Docker Buildx with container driver
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+        with:
+          driver: docker-container
+          driver-opts: |
+            image=moby/buildkit:latest
+            network=host
+
+      # Login to GHCR
       - name: Log in to Container Registry
         uses: docker/login-action@v3
         with:
@@ -53,7 +60,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      # Step 5: Extract metadata (tags, labels)
+      # Extract metadata
       - name: Extract Docker metadata
         id: meta
         uses: docker/metadata-action@v5
@@ -66,13 +73,8 @@ jobs:
             type=semver,pattern={{major}}.{{minor}}
             type=sha,prefix=sha-
             type=raw,value=latest,enable={{is_default_branch}}
-          labels: |
-            org.opencontainers.image.title=${{ github.event.repository.name }}
-            org.opencontainers.image.description=Blood Bank Stock System Backend API
-            org.opencontainers.image.vendor=JS-Kumaran
-            org.opencontainers.image.source=${{ github.server_url }}/${{ github.repository }}
 
-      # Step 6: Build and push Docker image
+      # Build and push
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
@@ -82,13 +84,3 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          build-args: |
-            JAR_FILE=target/*.jar
-
-      # Step 7: Verify image was pushed (optional)
-      - name: Verify image
-        if: github.event_name != 'pull_request'
-        run: |
-          echo "Image pushed successfully!"
-          echo "Image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest"
-          docker images
