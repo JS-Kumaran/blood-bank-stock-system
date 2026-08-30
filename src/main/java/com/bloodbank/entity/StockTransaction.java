@@ -1,78 +1,113 @@
 package com.bloodbank.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "stock_transaction")
+@Table(name = "stock_transactions")
 public class StockTransaction {
-
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long transactionId;
-
+    private Long id;
+    
+    @NotNull(message = "Blood group is required")
     @Enumerated(EnumType.STRING)
     @Column(name = "blood_group", nullable = false)
     private BloodGroup bloodGroup;
-
+    
+    @NotNull(message = "Transaction type is required")
     @Enumerated(EnumType.STRING)
-    @Column(name = "type", nullable = false)
-    private TransactionType type;
-
+    @Column(name = "transaction_type", nullable = false)
+    private TransactionType transactionType;
+    
+    @Min(value = 1, message = "Units must be at least 1")
     @Column(name = "units", nullable = false)
-    private int units;
-
-    @Column(name = "date", nullable = false)
-    private LocalDateTime date;
-
-    // Constructors
-    public StockTransaction() {}
-
-    public StockTransaction(BloodGroup bloodGroup, TransactionType type, int units) {
+    private Integer units;
+    
+    @Column(name = "transaction_date", nullable = false)
+    private LocalDateTime transactionDate;
+    
+    @Column(name = "notes")
+    private String notes;
+    
+    // Default constructor
+    public StockTransaction() {
+        this.transactionDate = LocalDateTime.now();
+    }
+    
+    // Constructor with fields
+    public StockTransaction(BloodGroup bloodGroup, TransactionType transactionType, Integer units) {
         this.bloodGroup = bloodGroup;
-        this.type = type;
+        this.transactionType = transactionType;
         this.units = units;
-        this.date = LocalDateTime.now();  // ← This sets the date automatically
+        this.transactionDate = LocalDateTime.now();
     }
-
+    
+    // Constructor with all fields
+    public StockTransaction(BloodGroup bloodGroup, TransactionType transactionType, 
+                           Integer units, String notes) {
+        this.bloodGroup = bloodGroup;
+        this.transactionType = transactionType;
+        this.units = units;
+        this.notes = notes;
+        this.transactionDate = LocalDateTime.now();
+    }
+    
     // Getters and Setters
-    public Long getTransactionId() {
-        return transactionId;
+    public Long getId() {
+        return id;
     }
-
-    public void setTransactionId(Long transactionId) {
-        this.transactionId = transactionId;
+    
+    public void setId(Long id) {
+        this.id = id;
     }
-
+    
     public BloodGroup getBloodGroup() {
         return bloodGroup;
     }
-
+    
     public void setBloodGroup(BloodGroup bloodGroup) {
         this.bloodGroup = bloodGroup;
     }
-
-    public TransactionType getType() {
-        return type;
+    
+    public TransactionType getTransactionType() {
+        return transactionType;
     }
-
-    public void setType(TransactionType type) {
-        this.type = type;
+    
+    public void setTransactionType(TransactionType transactionType) {
+        this.transactionType = transactionType;
     }
-
-    public int getUnits() {
+    
+    public Integer getUnits() {
         return units;
     }
-
-    public void setUnits(int units) {
+    
+    public void setUnits(Integer units) {
         this.units = units;
     }
-
-    public LocalDateTime getDate() {
-        return date;
+    
+    public LocalDateTime getTransactionDate() {
+        return transactionDate;
     }
-
-    public void setDate(LocalDateTime date) {
-        this.date = date;
+    
+    public void setTransactionDate(LocalDateTime transactionDate) {
+        this.transactionDate = transactionDate;
+    }
+    
+    public String getNotes() {
+        return notes;
+    }
+    
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+    
+    @PrePersist
+    protected void onCreate() {
+        this.transactionDate = LocalDateTime.now();
     }
 }

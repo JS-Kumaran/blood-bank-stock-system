@@ -1,38 +1,57 @@
 package com.bloodbank.dto;
 
-import com.bloodbank.entity.BloodStock;
+import java.util.Map;
 
 public class StockSummaryDto {
-
-    private String bloodGroup;
-    private int availableUnits;
-
-    public StockSummaryDto() {}
-
-    public StockSummaryDto(BloodStock stock) {
-        this.bloodGroup = stock.getBloodGroup().getDisplayName();
-        this.availableUnits = stock.getAvailableUnits();
+    
+    private Integer totalBloodBags;
+    private Integer totalAvailableUnits;
+    private Integer totalDonors;
+    private Map<String, Integer> bloodGroupDistribution;
+    
+    // Default constructor
+    public StockSummaryDto() {
     }
-
-    public StockSummaryDto(String bloodGroup, int availableUnits) {
-        this.bloodGroup = bloodGroup;
-        this.availableUnits = availableUnits;
+    
+    // Constructor with all fields
+    public StockSummaryDto(Integer totalBloodBags, Integer totalAvailableUnits, 
+                          Integer totalDonors, Map<String, Integer> bloodGroupDistribution) {
+        this.totalBloodBags = totalBloodBags;
+        this.totalAvailableUnits = totalAvailableUnits;
+        this.totalDonors = totalDonors;
+        this.bloodGroupDistribution = bloodGroupDistribution;
     }
-
+    
     // Getters and Setters
-    public String getBloodGroup() {
-        return bloodGroup;
+    public Integer getTotalBloodBags() {
+        return totalBloodBags;
     }
-
-    public void setBloodGroup(String bloodGroup) {
-        this.bloodGroup = bloodGroup;
+    
+    public void setTotalBloodBags(Integer totalBloodBags) {
+        this.totalBloodBags = totalBloodBags;
     }
-
-    public int getAvailableUnits() {
-        return availableUnits;
+    
+    public Integer getTotalAvailableUnits() {
+        return totalAvailableUnits;
     }
-
-    public void setAvailableUnits(int availableUnits) {
-        this.availableUnits = availableUnits;
+    
+    public void setTotalAvailableUnits(Integer totalAvailableUnits) {
+        this.totalAvailableUnits = totalAvailableUnits;
+    }
+    
+    public Integer getTotalDonors() {
+        return totalDonors;
+    }
+    
+    public void setTotalDonors(Integer totalDonors) {
+        this.totalDonors = totalDonors;
+    }
+    
+    public Map<String, Integer> getBloodGroupDistribution() {
+        return bloodGroupDistribution;
+    }
+    
+    public void setBloodGroupDistribution(Map<String, Integer> bloodGroupDistribution) {
+        this.bloodGroupDistribution = bloodGroupDistribution;
     }
 }

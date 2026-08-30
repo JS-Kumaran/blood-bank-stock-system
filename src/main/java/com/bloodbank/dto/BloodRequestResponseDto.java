@@ -1,8 +1,6 @@
 package com.bloodbank.dto;
 
 import com.bloodbank.entity.BloodRequest;
-import com.bloodbank.entity.BloodGroup;
-import com.bloodbank.entity.RequestStatus;
 import java.time.LocalDateTime;
 
 public class BloodRequestResponseDto {

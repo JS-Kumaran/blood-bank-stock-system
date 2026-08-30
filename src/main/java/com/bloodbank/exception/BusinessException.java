@@ -1,20 +1,28 @@
 package com.bloodbank.exception;
 
 public class BusinessException extends RuntimeException {
-
-    private final String code;
-
+    
+    private final String errorCode;
+    private final String message;
+    
+    public BusinessException(String message, String errorCode) {
+        super(message);
+        this.message = message;
+        this.errorCode = errorCode;
+    }
+    
     public BusinessException(String message) {
         super(message);
-        this.code = "BUSINESS_ERROR";
+        this.message = message;
+        this.errorCode = "BUSINESS_ERROR";
     }
-
-    public BusinessException(String message, String code) {
-        super(message);
-        this.code = code;
+    
+    public String getErrorCode() {
+        return errorCode;
     }
-
-    public String getCode() {
-        return code;
+    
+    @Override
+    public String getMessage() {
+        return message;
     }
 }

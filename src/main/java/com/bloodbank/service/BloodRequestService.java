@@ -8,6 +8,7 @@ import com.bloodbank.exception.ResourceNotFoundException;
 import com.bloodbank.repository.BloodRequestRepository;
 import com.bloodbank.repository.BloodStockRepository;
 import com.bloodbank.repository.StockTransactionRepository;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -44,7 +45,7 @@ public class BloodRequestService {
     }
 
     @Transactional
-    public BloodRequestResponseDto fulfillRequest(Long requestId) {
+    public BloodRequestResponseDto fulfillRequest(@NonNull Long requestId) {
         // 1. Find the request
         BloodRequest request = requestRepository.findById(requestId)
                 .orElseThrow(() -> new ResourceNotFoundException(
@@ -62,11 +63,13 @@ public class BloodRequestService {
         BloodGroup bloodGroup = request.getBloodGroup();
         int requestedUnits = request.getRequestedUnits();
 
-        // 3. Find blood stock with pessimistic lock
+        // 3. Find blood stock - throw exception if not found
         BloodStock stock = bloodStockRepository.findByBloodGroup(bloodGroup)
-                .orElse(null);
+                .orElseThrow(() -> new ResourceNotFoundException(
+                    "Blood stock not found for blood group: " + bloodGroup.getDisplayName()));
 
-        boolean hasSufficientStock = (stock != null && stock.getAvailableUnits() >= requestedUnits);
+        // Stock is guaranteed to exist, check if sufficient
+        boolean hasSufficientStock = stock.getAvailableUnits() >= requestedUnits;
 
         if (!hasSufficientStock) {
             // Reject the request
@@ -75,8 +78,7 @@ public class BloodRequestService {
             return new BloodRequestResponseDto(request);
         }
 
-        // 4. Fulfill the request
-        // Deduct stock
+        // 4. Fulfill the request - deduct stock
         stock.deductUnits(requestedUnits);
         bloodStockRepository.save(stock);
 
@@ -101,7 +103,7 @@ public class BloodRequestService {
                 .collect(Collectors.toList());
     }
 
-    public BloodRequestResponseDto getRequestById(Long requestId) {
+    public BloodRequestResponseDto getRequestById(@NonNull Long requestId) {
         BloodRequest request = requestRepository.findById(requestId)
                 .orElseThrow(() -> new ResourceNotFoundException(
                     "Blood request", "requestId", requestId));
